@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark, .dark *));
 
 :root {
   --background: oklch(0.08 0.01 20);
@@ -143,4 +143,112 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
   border: 3px solid oklch(0.08 0.01 20);
   box-shadow: 0 0 0 2px var(--orange);
+}
+
+/* Light mode overrides */
+html:not(.dark) {
+  --background: oklch(0.97 0.005 20);
+  --foreground: oklch(0.1 0.01 20);
+  --card: oklch(0.93 0.005 20);
+  --card-foreground: oklch(0.1 0.01 20);
+  --popover: oklch(0.93 0.005 20);
+  --popover-foreground: oklch(0.1 0.01 20);
+  --primary: oklch(0.65 0.22 35);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.88 0.005 20);
+  --secondary-foreground: oklch(0.1 0.01 20);
+  --muted: oklch(0.85 0.005 20);
+  --muted-foreground: oklch(0.45 0.01 20);
+  --accent: oklch(0.65 0.22 35);
+  --accent-foreground: oklch(1 0 0);
+  --border: oklch(0.78 0.005 20);
+  --input: oklch(0.85 0.005 20);
+  --ring: oklch(0.65 0.22 35);
+}
+
+/* ─── Light mode ─── */
+html:not(.dark) {
+  --background: oklch(0.96 0.005 80);
+  --foreground: oklch(0.12 0.01 20);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.01 20);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.01 20);
+  --secondary: oklch(0.92 0.005 80);
+  --secondary-foreground: oklch(0.12 0.01 20);
+  --muted: oklch(0.9 0.005 80);
+  --muted-foreground: oklch(0.45 0.01 20);
+  --border: oklch(0.82 0.005 80);
+  --input: oklch(0.9 0.005 80);
+}
+
+/* Force light backgrounds on hardcoded dark sections */
+html:not(.dark) body {
+  background-color: oklch(0.96 0.005 80);
+  color: oklch(0.12 0.01 20);
+}
+
+html:not(.dark) section {
+  background: oklch(0.96 0.005 80) !important;
+}
+
+html:not(.dark) [style*="oklch(0.08"] {
+  background: oklch(0.96 0.005 80) !important;
+  color: oklch(0.12 0.01 20) !important;
+}
+
+/* Text color fixes */
+html:not(.dark) .text-white {
+  color: oklch(0.12 0.01 20) !important;
+}
+
+html:not(.dark) .text-whl:not(.dark) .text-white\/70,
+html:not(.dark) .text-white\/50,
+html:not(.dark) .text-white\/80,
+html:not(.dark) .text-white\/30 {
+  color: oklch(0.35 0.01 20) !important;
+}
+
+/* Border fixes */
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/20,
+html:not(.dark) .border-white\/5 {
+  border-color: oklch(0.82 0.005 80) !important;
+}
+
+/* Card/surface fixes */
+html:not(.dark) .bg-white\/5,
+html:not(.dark) .bg-white\/10 {
+  background-color: oklch(0.9 0.005 80) !important;
+}
+
+/* Navbar background in light mode */
+html:not(.dark) header {
+  background: oklch(0.96 0.005 80 / 0.95) !important;
+  border-bottom-color: oklch(0.82 0.005 80) !important;
+}
+
+html:not(.dark) header .text-white\/70 {
+  color: oklch(0.3 0.01 20) !important;
+}
+
+/* Mobile drawer */
+html:not(.dark) .fixed.inset-0.bg-\[oklch\(0\.08_0\.01_20\)\] {
+  background: oklch(0.96 0.005 80) !important;
+}
+
+/* Vertical lines — hide in light mode */
+html:not(.dark) .border-white\/5 {
+  border-color: oklch(85 0.005 80) !important;
+}
+
+/* FAQ / accordion borders */
+html:not(.dark) [class*="border-white"] {
+  border-color: oklch(0.82 0.005 80) !important;
+}
+
+/* Pill tags */
+html:not(.dark) .bg-\[var\(--orange\)\]\/10 {
+  background-color: oklch(0.65 0.22 35 / 0.12) !important;
 }
