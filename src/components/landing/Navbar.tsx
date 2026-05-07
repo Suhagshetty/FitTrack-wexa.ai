@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,7 +6,28 @@ import { Zap, Menu, X, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
-const links = ["About Us", "Features", "How It Works", "Pricing", "FAQ"];
+const links = [
+  {
+    label: "About Us",
+    id: "about-us",
+  },
+  {
+    label: "Features",
+    id: "features",
+  },
+  {
+    label: "How It Works",
+    id: "how-it-works",
+  },
+  {
+    label: "Pricing",
+    id: "pricing",
+  },
+  {
+    label: "FAQ",
+    id: "faq",
+  },
+];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,19 +36,36 @@ export function Navbar() {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
 
     window.addEventListener("scroll", onScroll);
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Smooth Scroll
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <>
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{
+          duration: 0.6,
+          ease: "easeOut",
+        }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "bg-[oklch(0.08_0.01_20/0.95)] backdrop-blur-xl border-b border-white/5 shadow-2xl"
@@ -36,34 +73,39 @@ export function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/#hero" className="flex items-center gap-2 group">
+          {/* LOGO */}
+          <button
+            onClick={() => scrollToSection("hero")}
+            className="flex items-center gap-2 group"
+          >
             <div className="w-8 h-8 bg-[var(--orange)] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <Zap className="w-4 h-4 text-white fill-white" />
             </div>
 
             <span
               className="text-xl font-bold tracking-wider text-white uppercase"
-              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+              style={{
+                fontFamily: "'Barlow Condensed', sans-serif",
+              }}
             >
               FitTrack
             </span>
-          </Link>
+          </button>
 
-          {/* Desktop Navigation */}
+          {/* DESKTOP NAV */}
           <nav className="hidden md:flex items-center gap-8">
             {links.map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase().replace(/ /g, "-")}`}
+              <button
+                key={link.id}
+                onClick={() => scrollToSection(link.id)}
                 className="text-sm text-white/70 hover:text-[var(--orange)] transition-colors duration-200 font-medium tracking-wide"
               >
-                {link}
-              </a>
+                {link.label}
+              </button>
             ))}
           </nav>
 
-          {/* Auth Buttons */}
+          {/* AUTH BUTTONS */}
           <div className="hidden md:flex items-center gap-3">
             {status === "loading" ? null : session ? (
               <>
@@ -72,6 +114,7 @@ export function Navbar() {
                   className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors font-medium"
                 >
                   <User className="w-4 h-4" />
+
                   {session.user?.name?.split(" ")[0]}
                 </Link>
 
@@ -102,7 +145,7 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* MOBILE TOGGLE */}
           <button
             className="md:hidden text-white"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -117,7 +160,7 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile Drawer */}
+      {/* MOBILE DRAWER */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -131,25 +174,37 @@ export function Navbar() {
             }}
             className="fixed inset-0 z-40 bg-[oklch(0.08_0.01_20)] flex flex-col pt-20 px-8 md:hidden"
           >
-            {/* Links */}
+            {/* MOBILE LINKS */}
             <nav className="flex flex-col gap-6 mt-8">
               {links.map((link, i) => (
-                <motion.a
-                  key={link}
-                  href={`#${link.toLowerCase().replace(/ /g, "-")}`}
-                  initial={{ x: 40, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.06 }}
-                  className="text-2xl font-bold uppercase tracking-widest text-white/80 hover:text-[var(--orange)] transition-colors"
-                  style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  onClick={() => setMenuOpen(false)}
+                <motion.button
+                  key={link.id}
+                  initial={{
+                    x: 40,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    x: 0,
+                    opacity: 1,
+                  }}
+                  transition={{
+                    delay: i * 0.06,
+                  }}
+                  className="text-2xl font-bold uppercase tracking-widest text-white/80 hover:text-[var(--orange)] transition-colors text-left"
+                  style={{
+                    fontFamily: "'Barlow Condensed', sans-serif",
+                  }}
+                  onClick={() => {
+                    scrollToSection(link.id);
+                    setMenuOpen(false);
+                  }}
                 >
-                  {link}
-                </motion.a>
+                  {link.label}
+                </motion.button>
               ))}
             </nav>
 
-            {/* Bottom CTA */}
+            {/* MOBILE CTA */}
             <div className="mt-auto mb-12">
               {session ? (
                 <button

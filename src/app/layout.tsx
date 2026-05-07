@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "@/components/shared/Providers";
 import "./globals.css";
-
+import { FloatingHomeButton } from "@/components/global/FloatingHomeButton";
 export const metadata: Metadata = {
   title: "FitTrack — Push Your Limits",
   description:
@@ -30,7 +30,11 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ThemeProvider>
-          <Providers> {children}</Providers>
+          <Providers>
+            {" "}
+            {children}
+            <FloatingHomeButton />
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

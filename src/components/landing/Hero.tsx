@@ -17,7 +17,7 @@ export function Hero() {
   return (
     <section
       id="about-us"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-x-hidden"
       style={{
         background:
           "radial-gradient(ellipse 80% 70% at 70% 40%, oklch(0.25 0.12 35 / 0.6) 0%, oklch(0.08 0.01 20) 60%)",
@@ -32,7 +32,7 @@ export function Hero() {
         }}
       />
 
-      {/* Orange glow orbs */}
+      {/* Orange glow */}
       <div
         className="pointer-events-none absolute top-1/4 right-[15%] w-96 h-96 rounded-full blur-3xl opacity-20"
         style={{
@@ -40,6 +40,7 @@ export function Hero() {
             "radial-gradient(circle, oklch(0.65 0.22 35) 0%, transparent 70%)",
         }}
       />
+
       <div
         className="pointer-events-none absolute bottom-1/4 right-[5%] w-64 h-64 rounded-full blur-2xl opacity-10"
         style={{
@@ -48,9 +49,10 @@ export function Hero() {
         }}
       />
 
-      {/* Right side vertical lines */}
+      {/* Right side lines */}
       <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-1/2">
         <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.08_0.01_20)] via-transparent to-transparent z-10" />
+
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -58,34 +60,39 @@ export function Hero() {
             style={{ right: `${i * 80}px`, top: 0, bottom: 0 }}
             initial={{ scaleY: 0, originY: 1 }}
             animate={{ scaleY: 1 }}
-            transition={{ duration: 1.2, delay: 0.1 * i, ease: "easeOut" }}
+            transition={{
+              duration: 1.2,
+              delay: 0.1 * i,
+              ease: "easeOut",
+            }}
           />
         ))}
       </div>
 
-      {/* Main content */}
+      {/* Main */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-24 pb-16 w-full">
-        <div className="flex items-center justify-between">
-          {/* LEFT: Text content */}
+        <div className="flex items-center justify-between gap-10">
+          {/* LEFT */}
           <div className="max-w-2xl">
             {/* Badge */}
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--orange)]/30 bg-[var(--orange)]/10 mb-6"
             >
               <span className="w-2 h-2 rounded-full bg-[var(--orange)] animate-pulse" />
+
               <span className="text-[var(--orange)] text-xs font-bold tracking-widest uppercase">
                 #1 Fitness Platform
               </span>
             </motion.div>
 
-            {/* Headline */}
+            {/* Heading */}
             <motion.h1
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+              transition={{ duration: 0.7, delay: 0.15 }}
               className="text-6xl sm:text-7xl lg:text-8xl font-black leading-[0.92] uppercase tracking-tight mb-6"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
             >
@@ -100,27 +107,28 @@ export function Hero() {
             <motion.p
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              transition={{ duration: 0.7, delay: 0.2 }}
               className="text-white/60 text-lg leading-relaxed mb-10 max-w-md"
             >
               From beginner to advanced, experience workouts designed to help
               you achieve peak performance and exceed your fitness goals.
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* CTA */}
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
+              transition={{ duration: 0.7, delay: 0.25 }}
               className="flex flex-wrap gap-4 mb-10"
             >
               <Link
                 href="/auth/onboarding"
-                className="group flex items-center gap-2 px-8 py-4 bg-[var(--orange)] hover:bg-[var(--orange-bright)] text-white font-bold text-base rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_oklch(0.65_0.22_35/0.5)]"
+                className="group flex items-center gap-2 px-8 py-4 bg-[var(--orange)] hover:bg-[var(--orange-bright)] text-white font-bold text-base rounded-full transition-all duration-300 hover:scale-105"
               >
                 Join Now
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
+
               <button className="flex items-center gap-3 px-6 py-4 text-white font-semibold hover:text-[var(--orange)] transition-colors group">
                 <span className="w-12 h-12 flex items-center justify-center rounded-full border border-white/20 bg-white/5 group-hover:border-[var(--orange)]/50 group-hover:bg-[var(--orange)]/10 transition-all">
                   <Play className="w-4 h-4 fill-current ml-0.5" />
@@ -129,11 +137,11 @@ export function Hero() {
               </button>
             </motion.div>
 
-            {/* Social proof */}
+            {/* Reviews */}
             <motion.div
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              transition={{ duration: 0.7, delay: 0.3 }}
               className="flex items-center gap-4"
             >
               <div className="flex -space-x-2">
@@ -146,6 +154,7 @@ export function Hero() {
                   </div>
                 ))}
               </div>
+
               <div>
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
@@ -155,6 +164,7 @@ export function Hero() {
                     />
                   ))}
                 </div>
+
                 <p className="text-white/50 text-xs mt-0.5">
                   1.7k+ verified reviews
                 </p>
@@ -162,19 +172,22 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT: Bodybuilder with 3D breakout effect */}
+          {/* RIGHT IMAGE */}
           <motion.div
             initial={{ opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.9, delay: 0.3 }}
             className="relative hidden lg:block flex-shrink-0"
-            style={{ width: "540px", height: "660px" }}
+            style={{
+              width: "540px",
+              height: "720px",
+            }}
           >
-            {/* Arrow button — top right corner, sits above card */}
+            {/* Button */}
             <motion.div
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.4, ease: "backOut" }}
+              transition={{ delay: 0.8 }}
               className="absolute top-2 right-0 w-16 h-16 rounded-2xl flex items-center justify-center z-30 cursor-pointer hover:scale-110 transition-transform"
               style={{
                 background: "var(--orange)",
@@ -192,11 +205,11 @@ export function Hero() {
               </svg>
             </motion.div>
 
-            {/* THE ORANGE CARD — the "frame" the guy breaks out of */}
+            {/* Orange Card */}
             <motion.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+              transition={{ duration: 0.7, delay: 0.4 }}
               className="absolute rounded-3xl"
               style={{
                 background: "var(--orange)",
@@ -204,15 +217,12 @@ export function Hero() {
                 left: "30px",
                 right: "24px",
                 top: "80px",
-                /* Subtle 3D tilt */
                 transform: "perspective(1200px) rotateY(-5deg) rotateX(3deg)",
                 transformOrigin: "center bottom",
-                /* Rich layered shadow for depth */
                 boxShadow:
-                  "0 50px 100px -20px oklch(0.5 0.22 35 / 0.6), 0 30px 60px -10px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15)",
+                  "0 50px 100px -20px oklch(0.5 0.22 35 / 0.6), 0 30px 60px -10px rgba(0,0,0,0.7)",
               }}
             >
-              {/* Grain texture on card */}
               <div
                 className="absolute inset-0 rounded-3xl opacity-[0.07]"
                 style={{
@@ -220,11 +230,9 @@ export function Hero() {
                   backgroundSize: "128px",
                 }}
               />
-              {/* Bottom fade so feet look grounded */}
-              <div className="absolute bottom-0 left-0 right-0 h-32 rounded-b-3xl bg-gradient-to-t from-black/20 to-transparent" />
             </motion.div>
 
-            {/* AMBIENT GLOW behind the figure */}
+            {/* Glow */}
             <div
               className="absolute z-10 rounded-full blur-3xl pointer-events-none"
               style={{
@@ -237,21 +245,20 @@ export function Hero() {
               }}
             />
 
-            {/* THE BODYBUILDER — overflows the card top and bottom = breakout */}
+            {/* BODYBUILDER */}
             <motion.img
               src="/body1.png"
               alt="Fitness trainer"
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.1, delay: 0.55, ease: "easeOut" }}
+              transition={{ duration: 1.1, delay: 0.55 }}
               className="absolute z-20 object-contain object-bottom select-none"
               style={{
-                bottom: "-30px" /* feet hang below the card */,
+                bottom: "-10px",
                 left: "-10px",
                 right: "-10px",
-                height: "115%" /* taller than card = head breaks out the top */,
+                height: "108%",
                 width: "calc(100% + 20px)",
-                /* Heavy drop-shadow so he looks lifted in front of the card */
                 filter:
                   "drop-shadow(-16px 24px 40px rgba(0,0,0,0.85)) drop-shadow(0 -6px 20px rgba(0,0,0,0.4))",
                 transform: "perspective(1200px) rotateY(-2deg)",
@@ -260,12 +267,12 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* Category tags */}
+        {/* Tags */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.7, delay: 0.4 }}
           className="flex flex-wrap gap-2 mt-16 pt-8 border-t border-white/10"
         >
           {tags.map((tag, i) => (
@@ -273,7 +280,7 @@ export function Hero() {
               key={tag}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.5 + i * 0.07, ease: "easeOut" }}
+              transition={{ delay: 0.5 + i * 0.07 }}
               className="px-4 py-2 rounded-full border border-white/15 text-white/60 text-sm font-medium hover:border-[var(--orange)]/50 hover:text-[var(--orange)] hover:bg-[var(--orange)]/5 transition-all cursor-pointer"
             >
               {tag}
@@ -282,7 +289,7 @@ export function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -292,6 +299,7 @@ export function Hero() {
         <span className="text-white/30 text-xs tracking-widest uppercase">
           Scroll
         </span>
+
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
