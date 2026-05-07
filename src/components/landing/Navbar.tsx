@@ -2,14 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Menu, X } from "lucide-react";
+import { Zap, Menu, X, LogOut, User } from "lucide-react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react"; // ← ADD THIS
 
 const links = ["About Us", "Features", "How It Works", "Pricing", "FAQ"];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session, status } = useSession(); // ← ADD THIS
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -56,20 +58,43 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* CTA buttons */}
+          {/* CTA buttons — session-aware */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/auth/onboarding"
-              className="text-sm text-white/70 hover:text-white transition-colors font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              href="/auth/onboarding"
-              className="px-5 py-2 bg-[var(--orange)] hover:bg-[var(--orange-bright)] text-white text-sm font-bold rounded-full transition-all duration-200 hover:scale-105"
-            >
-              Free Trial
-            </Link>
+            {status === "loading" ? null : session ? (
+              // ✅ Logged in state
+              <>
+                <Link
+                  href="/dashboard"
+                  className="flex items-center gap-2 text-sm text-white/70 hover:text-white transition-colors font-medium"
+                >
+                  <User className="w-4 h-4" />
+                  {session.user?.name?.split(" ")[0]}
+                </Link>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="flex items-center gap-2 px-5 py-2 border border-white/20 hover:border-[var(--orange)] text-white text-sm font-bold rounded-full transition-all duration-200"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              // ❌ Logged out state
+              <>
+                <Link
+                  href="/auth/onboarding"
+                  className="text-sm text-white/70 hover:text-white transition-colors font-medium"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/onboarding"
+                  className="px-5 py-2 bg-[var(--orange)] hover:bg-[var(--orange-bright)] text-white text-sm font-bold rounded-full transition-all duration-200 hover:scale-105"
+                >
+                  Free Trial
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile toggle */}
@@ -87,7 +112,7 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile full-screen drawer */}
+      {/* Mobile drawer — unchanged, add sign out button at bottom */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -114,13 +139,22 @@ export function Navbar() {
               ))}
             </nav>
             <div className="mt-auto mb-12">
-              <Link
-                href="/auth/onboarding"
-                className="block w-full py-4 bg-[var(--orange)] text-white text-center font-bold text-lg rounded-2xl"
-                onClick={() => setMenuOpen(false)}
-              >
-                Start Free Trial
-              </Link>
+              {session ? (
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="block w-full py-4 border border-white/20 text-white text-center font-bold text-lg rounded-2xl"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Link
+                  href="/auth/onboarding"
+                  className="block w-full py-4 bg-[var(--orange)] text-white text-center font-bold text-lg rounded-2xl"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Start Free Trial
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
