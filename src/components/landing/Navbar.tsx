@@ -1,21 +1,25 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Menu, X, LogOut, User } from "lucide-react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react"; // ← ADD THIS
+import { useSession, signOut } from "next-auth/react";
 
 const links = ["About Us", "Features", "How It Works", "Pricing", "FAQ"];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { data: session, status } = useSession(); // ← ADD THIS
+
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
+
     window.addEventListener("scroll", onScroll);
+
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -33,10 +37,11 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/#hero" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-[var(--orange)] rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <Zap className="w-4 h-4 text-white fill-white" />
             </div>
+
             <span
               className="text-xl font-bold tracking-wider text-white uppercase"
               style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -45,7 +50,7 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {links.map((link) => (
               <a
@@ -58,10 +63,9 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* CTA buttons — session-aware */}
+          {/* Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">
             {status === "loading" ? null : session ? (
-              // ✅ Logged in state
               <>
                 <Link
                   href="/dashboard"
@@ -70,6 +74,7 @@ export function Navbar() {
                   <User className="w-4 h-4" />
                   {session.user?.name?.split(" ")[0]}
                 </Link>
+
                 <button
                   onClick={() => signOut({ callbackUrl: "/" })}
                   className="flex items-center gap-2 px-5 py-2 border border-white/20 hover:border-[var(--orange)] text-white text-sm font-bold rounded-full transition-all duration-200"
@@ -79,7 +84,6 @@ export function Navbar() {
                 </button>
               </>
             ) : (
-              // ❌ Logged out state
               <>
                 <Link
                   href="/auth/onboarding"
@@ -87,6 +91,7 @@ export function Navbar() {
                 >
                   Sign In
                 </Link>
+
                 <Link
                   href="/auth/onboarding"
                   className="px-5 py-2 bg-[var(--orange)] hover:bg-[var(--orange-bright)] text-white text-sm font-bold rounded-full transition-all duration-200 hover:scale-105"
@@ -97,11 +102,11 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile toggle */}
+          {/* Mobile Menu Toggle */}
           <button
             className="md:hidden text-white"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
+            aria-label="Toggle Menu"
           >
             {menuOpen ? (
               <X className="w-6 h-6" />
@@ -112,16 +117,21 @@ export function Navbar() {
         </div>
       </motion.header>
 
-      {/* Mobile drawer — unchanged, add sign out button at bottom */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            transition={{
+              type: "spring",
+              damping: 30,
+              stiffness: 300,
+            }}
             className="fixed inset-0 z-40 bg-[oklch(0.08_0.01_20)] flex flex-col pt-20 px-8 md:hidden"
           >
+            {/* Links */}
             <nav className="flex flex-col gap-6 mt-8">
               {links.map((link, i) => (
                 <motion.a
@@ -138,6 +148,8 @@ export function Navbar() {
                 </motion.a>
               ))}
             </nav>
+
+            {/* Bottom CTA */}
             <div className="mt-auto mb-12">
               {session ? (
                 <button
