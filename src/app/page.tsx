@@ -1,10 +1,24 @@
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
+import { Stats } from "@/components/landing/Stats";
+import { Features } from "@/components/landing/Features";
+import { HowItWorks } from "@/components/landing/HowItWorks";
+import { Testimonials } from "@/components/landing/Testimonials";
+import { Pricing } from "@/components/landing/Pricing";
+import { CTASection } from "@/components/landing/CtaFooter";
+import { Footer } from "@/components/landing/CtaFooter";
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold text-primary">FitTrack 🏃</h1>
-        <p className="text-muted-foreground">Project scaffold ready. Let&apos;s build!</p>
-      </div>
+    <main className="min-h-screen">
+      <Navbar />
+      <Hero />
+      <Stats />
+      <Features />
+      <HowItWorks />
+      <Testimonials />
+      <Pricing />
+      <CTASection />
+      <Footer />
     </main>
   );
 }
