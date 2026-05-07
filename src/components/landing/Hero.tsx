@@ -162,26 +162,26 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* RIGHT: Bodybuilder image with orange blocks */}
+          {/* RIGHT: Bodybuilder with 3D breakout effect */}
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 80 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
-            className="relative hidden lg:flex items-end justify-center flex-shrink-0"
-            style={{ width: "480px", height: "560px" }}
+            className="relative hidden lg:block flex-shrink-0"
+            style={{ width: "540px", height: "660px" }}
           >
-            {/* Large orange background block */}
-            <div
-              className="absolute bottom-0 right-8 w-80 h-[85%] rounded-3xl"
-              style={{ background: "var(--orange)" }}
-            />
-
-            {/* Small orange arrow block — top right */}
-            <div
-              className="absolute top-8 right-0 w-16 h-16 rounded-2xl flex items-center justify-center z-20"
-              style={{ background: "var(--orange)" }}
+            {/* Arrow button — top right corner, sits above card */}
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.4, ease: "backOut" }}
+              className="absolute top-2 right-0 w-16 h-16 rounded-2xl flex items-center justify-center z-30 cursor-pointer hover:scale-110 transition-transform"
+              style={{
+                background: "var(--orange)",
+                boxShadow: "0 8px 24px oklch(0.55 0.22 35 / 0.5)",
+              }}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M7 17L17 7M17 7H7M17 7V17"
                   stroke="white"
@@ -190,20 +190,72 @@ export function Hero() {
                   strokeLinejoin="round"
                 />
               </svg>
-            </div>
+            </motion.div>
 
-            {/* Small orange accent block — bottom left */}
+            {/* THE ORANGE CARD — the "frame" the guy breaks out of */}
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+              className="absolute rounded-3xl"
+              style={{
+                background: "var(--orange)",
+                bottom: "0px",
+                left: "30px",
+                right: "24px",
+                top: "80px",
+                /* Subtle 3D tilt */
+                transform: "perspective(1200px) rotateY(-5deg) rotateX(3deg)",
+                transformOrigin: "center bottom",
+                /* Rich layered shadow for depth */
+                boxShadow:
+                  "0 50px 100px -20px oklch(0.5 0.22 35 / 0.6), 0 30px 60px -10px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.15)",
+              }}
+            >
+              {/* Grain texture on card */}
+              <div
+                className="absolute inset-0 rounded-3xl opacity-[0.07]"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+                  backgroundSize: "128px",
+                }}
+              />
+              {/* Bottom fade so feet look grounded */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 rounded-b-3xl bg-gradient-to-t from-black/20 to-transparent" />
+            </motion.div>
+
+            {/* AMBIENT GLOW behind the figure */}
             <div
-              className="absolute bottom-12 left-0 w-12 h-12 rounded-xl z-20"
-              style={{ background: "var(--orange)", opacity: 0.7 }}
+              className="absolute z-10 rounded-full blur-3xl pointer-events-none"
+              style={{
+                background: "oklch(0.65 0.22 35 / 0.4)",
+                width: "320px",
+                height: "420px",
+                bottom: "40px",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
             />
 
-            {/* The bodybuilder photo */}
-            <img
+            {/* THE BODYBUILDER — overflows the card top and bottom = breakout */}
+            <motion.img
               src="/body1.png"
               alt="Fitness trainer"
-              className="relative z-10 h-full object-contain object-bottom select-none drop-shadow-2xl"
-              style={{ maxWidth: "460px" }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1.1, delay: 0.55, ease: "easeOut" }}
+              className="absolute z-20 object-contain object-bottom select-none"
+              style={{
+                bottom: "-30px" /* feet hang below the card */,
+                left: "-10px",
+                right: "-10px",
+                height: "115%" /* taller than card = head breaks out the top */,
+                width: "calc(100% + 20px)",
+                /* Heavy drop-shadow so he looks lifted in front of the card */
+                filter:
+                  "drop-shadow(-16px 24px 40px rgba(0,0,0,0.85)) drop-shadow(0 -6px 20px rgba(0,0,0,0.4))",
+                transform: "perspective(1200px) rotateY(-2deg)",
+              }}
             />
           </motion.div>
         </div>
