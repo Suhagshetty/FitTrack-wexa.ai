@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus } from "lucide-react";
 
 const faqs = [
@@ -26,7 +26,7 @@ const faqs = [
       "Yes. Every user gets a free 14-day trial with full access to all premium features.",
   },
   {
-    question: "Can I cancel anyme?",
+    question: "Can I cancel anytime?",
     answer:
       "Yes. There are no contracts or hidden fees. You can cancel your subscription anytime directly from your dashboard.",
   },
@@ -43,19 +43,21 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="relative py-28 overflow-hidden bg-[var(--color-background)]"
+      className="relative pt-8 pb-24 overflow-hidden bg-[var(--color-background)]"
     >
       <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8">
-        <m.div
+        {/* Heading */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <p className="text-[var(--orange)] uppercase tracking-[0.3em] text-sm font-bold mb-4">
             FAQ
           </p>
+
           <h2
             className="text-5xl lg:text-7xl font-black uppercase leading-none text-[var(--color-foreground)]"
             style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
@@ -64,17 +66,20 @@ export function FAQ() {
             <br />
             <span className="text-[var(--orange)]">Questions</span>
           </h2>
+
           <p className="text-[var(--color-muted-foreground)] text-lg max-w-2xl mx-auto mt-6">
             Everything you need to know about FitTrack, memberships, workouts,
             and getting started.
           </p>
-        </m.div>
+        </motion.div>
 
+        {/* FAQ Items */}
         <div className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = active === index;
+
             return (
-              <m.div
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -86,16 +91,20 @@ export function FAQ() {
                     : "border-[var(--color-border)] bg-[var(--color-card)]"
                 }`}
               >
+                {/* Question */}
                 <button
                   onClick={() => setActive(active === index ? null : index)}
                   className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
                 >
                   <h3
                     className="text-xl font-bold text-[var(--color-foreground)] uppercase tracking-wide"
-                    style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+                    style={{
+                      fontFamily: "'Barlow Condensed', sans-serif",
+                    }}
                   >
                     {faq.question}
                   </h3>
+
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all flex-shrink-0 ${
                       isOpen
@@ -103,27 +112,44 @@ export function FAQ() {
                         : "bg-[var(--color-muted)] text-[var(--color-muted-foreground)]"
                     }`}
                   >
-                    {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+                    {isOpen ? (
+                      <Minus className="w-5 h-5" />
+                    ) : (
+                      <Plus className="w-5 h-5" />
+                    )}
                   </div>
                 </button>
 
+                {/* Answer */}
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <m.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    <motion.div
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      transition={{
+                        duration: 0.3,
+                        ease: "easeInOut",
+                      }}
                     >
                       <div className="px-6 pb-6">
                         <p className="text-[var(--color-muted-foreground)] leading-relaxed text-base">
                           {faq.answer}
                         </p>
                       </div>
-                    </m.div>
+                    </motion.div>
                   )}
                 </AnimatePresence>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
