@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -17,6 +18,7 @@ const TOTAL_STEPS = 5;
 export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
+  const router = useRouter();
 
   const goNext = () => {
     setDirection(1);
@@ -27,6 +29,10 @@ export default function OnboardingPage() {
     setStep((s) => Math.max(s - 1, 1));
   };
   const goSkip = () => {
+    if (step === TOTAL_STEPS) {
+      router.push("/dashboard");
+      return;
+    }
     setDirection(1);
     setStep((s) => Math.min(s + 1, TOTAL_STEPS));
   };

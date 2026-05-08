@@ -11,6 +11,7 @@ interface AuthState {
   setUser: (user: User) => void;
   updateOnboarding: (data: Partial<OnboardingData>) => void;
   logout: () => void;
+  clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -26,9 +27,11 @@ export const useAuthStore = create<AuthState>()(
         })),
       logout: () =>
         set({ user: null, onboardingData: {}, isAuthenticated: false }),
+      clearUser: () =>
+        set({ user: null, onboardingData: {}, isAuthenticated: false }),
     }),
-    { name: "fittrack-auth" }
-  )
+    { name: "fittrack-auth" },
+  ),
 );
 
 // ─── Theme Store ──────────────────────────────────────────────────────────────
@@ -47,6 +50,6 @@ export const useThemeStore = create<ThemeState>()(
         set((state) => ({ theme: state.theme === "light" ? "dark" : "light" })),
       setTheme: (theme) => set({ theme }),
     }),
-    { name: "fittrack-theme" }
-  )
+    { name: "fittrack-theme" },
+  ),
 );

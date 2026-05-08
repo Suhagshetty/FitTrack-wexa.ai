@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import { Providers } from "@/components/shared/Providers";
 import "./globals.css";
 import { FloatingHomeButton } from "@/components/global/FloatingHomeButton";
+
 export const metadata: Metadata = {
   title: "FitTrack — Push Your Limits",
   description:
@@ -28,10 +29,15 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
+
       <body className="antialiased">
+        {/* Accessibility Skip Link */}
+        <a href="#main-content" className="skip-to-main">
+          Skip to main content
+        </a>
+
         <ThemeProvider>
           <Providers>
-            {" "}
             {children}
             <FloatingHomeButton />
           </Providers>

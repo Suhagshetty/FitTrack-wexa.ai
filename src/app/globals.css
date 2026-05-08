@@ -283,7 +283,7 @@ html:not(.dark) [style*="oklch(0.14"] {
 html:not(.dark) .bg-white\/3,
 html:not(.dark) .bg-white\/4,
 html:not(.dark) .bg-white\/5,
-html:not(.dae\/8,
+html:not(.dark) .bg-white\/8,
 html:not(.dark) .bg-white\/10,
 html:not(.dark) .bg-white\/15 {
   background-color: oklch(0.91 0.005 80) !important;
@@ -321,4 +321,49 @@ html:not(.dark) .pointer-events-none.absolute {
 /* Hero image card — keep it visible but fix bg */
 html:not(.dark) .pointer-ents-none.fixed {
   display: none !important;
+}
+/* ─── Shimmer keyframe for skeleton loaders ─── */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ─── Focus visible styles for accessibility ─── */
+*:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─── Skip to main content link (accessibility) ─── */
+.skip-to-main {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--orange);
+  color: white;
+  font-weight: bold;
+  border-radius: 0 0 0.5rem 0.5rem;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* ─── Reduced motion support ─── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
