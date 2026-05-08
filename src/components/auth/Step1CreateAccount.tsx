@@ -7,6 +7,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, Mail, User, Lock, Zap } from "lucide-react";
 import { useAuthStore } from "@/store";
+import { signIn } from "next-auth/react";
 
 const schema = z
   .object({
@@ -89,6 +90,7 @@ export function Step1CreateAccount({ onNext }: Step1Props) {
       {/* Google OAuth */}
       <button
         type="button"
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
         className="w-full flex items-center justify-center gap-3 py-3.5 rounded-xl border border-white/15 bg-white/5 text-white text-sm font-semibold hover:bg-white/10 hover:border-white/25 transition-all duration-200 mb-6"
       >
         <svg className="w-5 h-5" viewBox="0 0 24 24">
