@@ -1,43 +1,62 @@
-# FitTrack
+# FitTrack — Push Your Limits
 
-Premium fitness and wellness platform built with Next.js, TypeScript, Tailwind CSS, and Framer Motion.
-
-A modern multi-page fitness experience featuring a responsive landing page, animated onboarding flow, and interactive user dashboard.
+> Premium fitness & wellness platform built with Next.js 16, TypeScript, Tailwind CSS v4, and Framer Motion.
 
 ---
 
-## Preview
+## Screenshots
 
-FitTrack delivers:
+### Landing Page — Desktop
+![Landing Page Desktop](.github/screenshots/landing-desk.png)
 
-- High-performance responsive UI
-- Animated onboarding experience
-- Dashboard analytics
-- Dark modern athletic design
-- Persistent onboarding state
-- Smooth micro-interactions
+### Mobile View
+![Mobile](.github/screenshots/mobile.png)
+
+### Dashboard
+![Dashboard](.github/screenshots/dashboard.png)
+
+### Dashboard — Workout View
+![Dashboard Workouts](.github/screenshots/dash-work.png)
+
+### Lighthouse Score
+![Lighthouse](.github/screenshots/lighthouse.png)
+
+### Onboarding Flow
+![Step 1](.github/screenshots/onboard1.png)
+![Step 2](.github/screenshots/onboard2.png)
+![Step 3](.github/screenshots/onboard3.png)
+![Step 4](.github/screenshots/onboard4.png)
+![Step 5](.github/screenshots/onboard5.png)
+
+---
+
+## Live Demo
+
+🔗 [fittrack-wexa.vercel.app](https://fittrack-wexa.vercel.app)
 
 ---
 
 ## Getting Started
 
-### Install dependencies
-
 ```bash
 npm install
 npm install canvas-confetti @types/canvas-confetti
-```
-
-### Run development server
-
-```bash
 npm run dev
 ```
 
-Application runs at:
+Open/localhost:3000](http://localhost:3000)
 
-```txt
-http://localhost:3000
+---
+
+## Environment Variables
+
+Create `.env.local`:
+
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_secret
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
 ```
 
 ---
@@ -47,7 +66,7 @@ http://localhost:3000
 | Route | Description |
 |---|---|
 | `/` | Landing page |
-| `/auth/onboarding` | Multi-step onboarding flow |
+| `/auth/onboarding` | 5-step onboarding flow |
 | `/dashboard` | User fitness dashboard |
 
 ---
@@ -56,143 +75,89 @@ http://localhost:3000
 
 | Category | Technology |
 |---|---|
-| Framework | Next.js App Router |
+| Framework | Next.js 16 App Router |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 |
-| Animations | Framer Motion |
+| Animations | Framer Motion (LazyMotion) |
 | Forms | React Hook Form + Zod |
 | State Management | Zustand |
-| Authentication | NextAuth.js |
 | Icons | Lucide React |
-| Fonts | Barlow Condensed, DM Sans |
+| Fonts | Barlow Condensed, DM Sans (next/font) |
 
 ---
 
 ## Features
 
 ### Landing Page
+- Premium hero section with fitness trainer illustration
+- Animated statistics counter section
+- Feature showcase with hover effects
+- How It Works — 3-step visual flow
+- Testimonials with star ratings
+- 3-tier pricing with Popularadge
+- FAQ accordion
+- Sticky navbar with mobile hamburger drawer
+- Footer with social links and newsletter signup
 
-- Responsive premium hero section
-- Animated statistics
-- Feature showcase
-- Testimonials
-- Pricing section
-- FAQ section
-- Smooth scrolling navigation
-- Mobile navigation drawer
-- Modern footer with multiple pages
-
-### Authentication
-
-- Google OAuth login
-- Credential-based authentication
-- Protected dashboard routes
-- Session persistence
-
-### Onboarding Flow
-
-- Multi-step onboarding
-- Animated transitions
-- Real-time validation
-- Password strength indicator
-- Fitness goal selection
-- Activity level selection
-- Height & weight sliders
-- Avatar upload
-- Completion confetti
+### 5-Step Onboarding Flow
+- Step 1 — Create Account: name, email, password strength indicator
+- Step 2 — Personal Details: DOB, gender toggle, height/weight sliders
+- Step 3 — Fitness Goals: visual goal cards (select up to 3)
+- Step 4 — Activity Level: illustrated radio cards
+- Step 5 — Profile Setup: avatar upload, username, bio, confetti on completion
+- Animated progress bar, real-time Zod validation, skip on optional steps
 
 ### Dashboard
-
-- Fitness analytics cards
-- Workout progress tracker
-- Interactive charts
-- Collapsible sidebar
-- Mobile bottom navigation
-- Dark mode support
-- Animated counters
+- Stats cards — Calories, Workouts, Streak, Goal Progress
+- Today's workout checklist
+- Weekly activity bar chart
+- Collapsible sidebar + mobile bottom tab bar
+- Dark mode, animated counters
 
 ---
 
-## Project Structure
+## Component Architecture
 
 ```txt
-src
-├── app
-│   ├── page.tsx
-│   ├── auth
-│   │   └── onboarding
-│   ├── dashboard
-│   ├── about
-│   ├── careers
-│   ├── contact
-│   └── api
-│       └── auth
-│
-├── components
-│   ├── landing
-│   ├── auth
-│   ├── dashboard
-│   ├── shared
-│   └── ui
-│
-├── lib
-├── store
-├── types
-└── utils
+src/
+├── app/
+│   ├── page.tsx                  # Dynamic imports for below-fold sections
+│   ├── layout.tsx                # LazyMotion + next/font + ThemeProvider
+│   ├── auth/onboardin─ components/
+│   ├── landing/                  # Navbar, Hero, Stats, Features, etc.
+│   ├── auth/                     # Onboarding step components
+│   ├── dashboard/                # Widgets and layout
+│   ├── shared/                   # Providers, ThemeProvider
+│   └── ui/                       # Shared primitives
+├── store/                        # Zustand stores
+├── lib/                          # Auth config, utilities
+└── types/
 ```
 
----
+### Key Architecture Decisions
 
-## Design System
-
-### Theme
-
-- Dark athletic interface
-- Orange accent palette
-- OKLCH color system
-- High contrast UI
-- Glassmorphism elements
-- Layered depth and glow effects
-
-### Typography
-
-- Barlow Condensed for headings
-- DM Sans for body text
-
-### Motion
-
-- Framer Motion powered animations
-- Smooth section reveals
-- Interactive hover states
-- Animated navigation
-- Micro-interactions throughout UI
+- **Below-fold code splitting** — `next/dynamic` for every section below Hero
+- **LazyMotion at root** — reduces Framer Motion critical-path JS from ~30KB to ~6KB
+- **Self-hosted fonts** — `next/font` eliminates Google Fonts network request (~220ms LCP saving)
+- **Optimised LCP image** — `priority` + `fetchPriority="high"`, no CSS `filter` or `perspective` on image
 
 ---
 
-## Performance Decisions
+## Performance
 
-- App Router architecture
-- Optimized component structure
-- Minimal bundle usage
-- CSS-driven charts
-- Client/server component separation
-- Lightweight animation strategy
+### Lighthouse (Mobile, Production)
 
----
+| Metric | Score |
+|---|---|
+| Performance | 87 |
+ore Web Vitals
 
-## Environment Variables
-
-Create a `.env.local` file:
-
-```env
-NEXTAUTH_URL=http://localhost:3000
-
-NEXTAUTH_SECRET=your_secret
-
-GOOGLE_CLIENT_ID=your_google_client_id
-
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-```
+| Metric | Value |
+|---|---|
+| FCP | 0.8s |
+| LCP | 4.0s |
+| TBT | 90ms |
+| CLS | 0 |
 
 ---
 
@@ -207,19 +172,6 @@ npm run lint
 
 ---
 
-## Future Improvements
-
-- Backend integration
-- Real workout tracking
-- Nutrition analytics
-- AI workout recommendations
-- Progress history
-- Social fitness features
-- Stripe subscriptions
-- PWA support
-
----
-
 ## License
 
-This project is built for educational and technical assessment purposes.
+Built for technical assessment purposes.
