@@ -46,20 +46,7 @@ npm run dev
 
 Open/localhost:3000](http://localhost:3000)
 
----
 
-## Environment Variables
-
-Create `.env.local`:
-
-```env
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_secret
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-```
-
----
 
 ## Routes
 
