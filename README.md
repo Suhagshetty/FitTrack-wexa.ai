@@ -32,7 +32,7 @@
 
 ## Live Demo
 
-🔗 [fittrack-wexa.vercel.app](https://fittrack-wexa.vercel.app)
+🔗 [fittrack-wexa.vercel.app](https://fit-track-wexa-ai-cpla.vercel.app/)
 
 ---
 
