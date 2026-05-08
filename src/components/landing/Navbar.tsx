@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Menu, X, LogOut, User, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { useThemeStore } from "@/store"; // ← uses Zustand store
+import { useRouter, usePathname } from "next/navigation";
+import { useThemeStore } from "@/store";
 
 const links = [
   { label: "About Us", id: "about-us" },
@@ -19,13 +20,13 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ← replaces local useState(true) — now synced with ThemeProvider + persisted
   const { theme, toggleTheme } = useThemeStore();
   const dark = theme === "dark";
 
   const { data: session, status } = useSession();
-
-  // NO manual useEffect for dark class — ThemeProvider in layout.tsx handles it
+  const router = useRouter();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -33,15 +34,24 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // If on homepage → smooth scroll. If on another page → navigate to /#section-id
+  const handleNavClick = (id: string) => {
     setMenuOpen(false);
+    if (isHome) {
+      const section = document.getElementById(id);
+      if (section)
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      router.push(`/#${id}`);
+    }
   };
 
-  const scrollToSection = (id: string) => {
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+  const scrollToTop = () => {
+    setMenuOpen(false);
+    if (isHome) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      router.push("/");
     }
   };
 
@@ -58,7 +68,7 @@ export function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* LOGO — scrolls to top */}
+          {/* LOGO */}
           <button
             onClick={scrollToTop}
             className="flex items-center gap-2 group"
@@ -79,7 +89,7 @@ export function Navbar() {
             {links.map((link) => (
               <button
                 key={link.id}
-                onClick={() => scrollToSection(link.id)}
+                onClick={() => handleNavClick(link.id)}
                 className="text-sm text-white/70 hover:text-[var(--orange)] transition-colors duration-200 font-medium tracking-wide"
               >
                 {link.label}
@@ -89,7 +99,7 @@ export function Navbar() {
 
           {/* RIGHT: dark toggle + auth */}
           <div className="hidden md:flex items-center gap-3">
-            {/* Dark mode toggle — calls toggleTheme from store */}
+            {/* Dark mode toggle */}
             <button
               onClick={toggleTheme}
               className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[var(--orange)]/60 hover:bg-[var(--orange)]/10 text-white/70 hover:text-[var(--orange)] transition-all duration-200"
@@ -203,10 +213,7 @@ export function Navbar() {
                   transition={{ delay: i * 0.06 }}
                   className="text-2xl font-bold uppercase tracking-widest text-white/80 hover:text-[var(--orange)] transition-colors text-left"
                   style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                  onClick={() => {
-                    scrollToSection(link.id);
-                    setMenuOpen(false);
-                  }}
+                  onClick={() => handleNavClick(link.id)}
                 >
                   {link.label}
                 </motion.button>
