@@ -6,9 +6,9 @@ import {
   Zap,
   Mail,
   ArrowRight,
-  Send,
-  MessageCircle,
-  PlayCircle,
+  ExternalLink,
+  GitBranch,
+  Globe,
 } from "lucide-react";
 
 export function CTASection() {
@@ -166,16 +166,34 @@ export function Footer() {
               The premium platform for athletes who refuse to settle.
             </p>
 
+            {/* Social Links */}
             <div className="flex gap-3">
-              {[Send, MessageCircle, PlayCircle].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--orange)]/20 hover:border-[var(--orange)]/40 transition-all"
-                >
-                  <Icon className="w-4 h-4 text-white/50" />
-                </a>
-              ))}
+              <a
+                href="https://www.linkedin.com/in/suhagshetty07/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--orange)]/20 hover:border-[var(--orange)]/40 transition-all"
+              >
+                <ExternalLink className="w-4 h-4 text-white/60" />
+              </a>
+
+              <a
+                href="https://github.com/Suhagshetty"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--orange)]/20 hover:border-[var(--orange)]/40 transition-all"
+              >
+                <GitBranch className="w-4 h-4 text-white/60" />
+              </a>
+
+              <a
+                href="https://suhagxyz.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[var(--orange)]/20 hover:border-[var(--orange)]/40 transition-all"
+              >
+                <Globe className="w-4 h-4 text-white/60" />
+              </a>
             </div>
           </div>
 
@@ -205,12 +223,12 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-white/8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/25 text-sm">
-            © 2024 FitTrack. All rights reserved.
+            © 2026 FitTrack. All rights reserved.
           </p>
 
           <div className="flex items-center gap-2 text-white/25 text-sm">
             <Mail className="w-4 h-4" />
-            hello@fittrack.app
+            suhagshetty07@gmail.com
           </div>
         </div>
       </div>
