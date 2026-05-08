@@ -252,3 +252,73 @@ html:not(.dark) [class*="border-white"] {
 html:not(.dark) .bg-\[var\(--orange\)\]\/10 {
   background-color: oklch(0.65 0.22 35 / 0.12) !important;
 }
+
+/* ─── Comprehensive Light Mode Fixes ─── */
+
+/* Fix white text inside expanded FAQ and any dark containers */
+html:not(.dark) .text-white\/60,
+html:not(.dark) .text-white\/70,
+html:not(.dark) .text-white\/50,
+html:not(.dark) .text-white\/40,
+html:not(.dark) .text-white\/30,
+html:not(.dark) .text-white\/20,
+html:not(.dark) .text-white\/10,
+html:not(.dark) .text-white {
+  color: oklch(0.15 0.01 20) !important;
+}
+
+/* Fix hardcoded dark inline style backgrounds */
+html:not(.dark) [style*="oklch(0.08"],
+html:not(.dark) [style*="oklch(0.09"],
+html:not(.dark) [style*="oklch(0.10"],
+html:not(.dark) [style*="oklch(0.11"],
+html:not(.dark) [style*="oklch(0.12"],
+html:not(.dark) [style*="oklch(0.13"],
+html:not(.dark) [style*="oklch(0.14"] {
+  background: oklch(0.96 0.005 80) !important;
+  color: oklch(0.12 0.01 20) !important;
+}
+
+/* Fix dark bg utility classes */
+html:not(.dark) .bg-white\/3,
+html:not(.dark) .bg-white\/4,
+html:not(.dark) .bg-white\/5,
+html:not(.dae\/8,
+html:not(.dark) .bg-white\/10,
+html:not(.dark) .bg-white\/15 {
+  background-color: oklch(0.91 0.005 80) !important;
+}
+
+/* Fix radial gradient dark overlays */
+html:not(.dark) [style*="radial-gradient"] {
+  background: transparent !important;
+}
+
+/* Fix grid pattern overlay */
+html:not(.dark) [style*="backgroundImage"][style*="linear-gradient(oklch"] {
+  opacity: 0 !important;
+}
+
+/* Fix dark rounded cards with border */
+html:not(.dark) .rounded-2xl.border,
+html:not(.dark) .rounded-xl.border,
+html:not(.dark) .rounded-3xl.border {
+  background-color: oklch(1 0 0) !important;
+  border-color: oklch(0.82 0.005 80) !important;
+}
+
+/* Keep orange accent text intact */
+html:not(.dark) .text-\[var\(--orange\)\] {
+  color: var(--orange) !important;
+}
+
+/* Fix pointer-events-none dark overlays (hero background blobs) */
+html:not(.dark) .pointer-events-none.fixed,
+html:not(.dark) .pointer-events-none.absolute {
+  opacity: 0 !important;
+}
+
+/* Hero image card — keep it visible but fix bg */
+html:not(.dark) .pointer-ents-none.fixed {
+  display: none !important;
+}
